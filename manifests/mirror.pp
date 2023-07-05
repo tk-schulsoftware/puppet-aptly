@@ -109,12 +109,12 @@ define aptly::mirror (
     }
     if $key[server] {
       $key_server = $key[server]
-    }else{
+    } else {
       $key_server = $::aptly::key_server
     }
 
   # key in string/array format
-  }elsif is_string($key) or is_array($key) {
+  } elsif is_string($key) or is_array($key) {
     $key_server = $::aptly::key_server
     if is_array($key) {
       $key_string = join($key, "' '")
@@ -131,7 +131,7 @@ define aptly::mirror (
       Package['aptly'],
       File['/etc/aptly.conf'],
     ]
-  }else{
+  } else {
     exec { "aptly_mirror_gpg-${title}":
       path    => '/bin:/usr/bin',
       command => "${gpg_cmd} --keyserver '${key_server}' --recv-keys '${key_string}'",
